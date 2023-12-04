@@ -1,1 +1,0 @@
-{"mappings":"AAAAA,YAAW,WACPC,QAAQC,IAAI,Y,GACb","sources":["src/index.js"],"sourcesContent":["setTimeout(() => {\n    console.log('2 seconds');\n}, 2000);"],"names":["setTimeout","console","log"],"version":3,"file":"index.502a12dd.js.map"}
