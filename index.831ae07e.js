@@ -1,0 +1,2 @@
+const t=document.querySelector(".js-list");(void fetch("https://api.themoviedb.org/3trending/movie/day?api_key=155ac852b40c3d4bc41678b5b0356daa&page=20").then((t=>{if(!t.ok)throw new Error(t.statusText);return t.json()}))).then((e=>t.insertAdjacentHTML("beforeend",e.results.map((({poster_path:t,title:e})=>`<li>\n    <img  src="https://image.tmdb.org/t/p/w300${t}" alt="${e}">\n    <h2>${e}</h2>\n  </li>`)).join("")))).catch((t=>console.log(t)));
+//# sourceMappingURL=index.831ae07e.js.map
