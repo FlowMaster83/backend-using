@@ -164,6 +164,7 @@ function handlerFormSubmit(event) {
   const { title, body } = event.currentTarget.elements;
 
   // с функции никогда не отдавать готовый json
+  // строгий образец:
   const data = {
     title: title.value,
     body: body.value,
