@@ -149,8 +149,8 @@ addPost.addEventListener('click', handlerAddPost);
 function handlerAddPost() {
   formWrapper.innerHTML = `
   <form action="submit" class="js-form-add" style: "style="display: flex; flex-direction: column">
-  <input type="text" name="title" />
-  <textarea name="body" type="text" cols="30" rows="10"></textarea>
+  <input type="text" name="name" />
+  <textarea name="description" type="text" cols="30" rows="10"></textarea>
   <button>Add Post</button>
   </form>`;
 
@@ -161,13 +161,13 @@ function handlerAddPost() {
 function handlerFormSubmit(event) {
   event.preventDefault();
 
-  const { title, body } = event.currentTarget.elements;
+  const { name, description } = event.currentTarget.elements;
 
   // с функции никогда не отдавать готовый json
   // строгий образец:
   const data = {
-    title: title.value,
-    body: body.value,
+    title: name.value,
+    body: description.value,
   };
 
   addPostService(data)
