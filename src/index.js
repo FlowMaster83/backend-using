@@ -138,7 +138,6 @@ POSTMAN - отдаст, но не факт, что будет работать �
 
 // опции (строгая структура)
 // body - формат json
-// строгий образец:
 
 const addPost = document.querySelector('.js-add');
 const listPosts = document.querySelector('.js-posts');
@@ -193,6 +192,7 @@ function createPostMarkup({ id, title, body }) {
 }
 
 function addPostService(data) {
+  // строгий образец:
   const options = {
     method: 'POST',
     headres: {
