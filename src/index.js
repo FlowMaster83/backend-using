@@ -119,9 +119,7 @@ POSTMAN - отдаст, но не факт, что будет работать �
 // json placeholder - api
 
 // R - GET
-// POST (отличие от GET) должен передать какую-то информацию
 // работаем в Postman с вкладкой Body (form-data или raw - струкутура в формате json)
-// должен быть статус 201, в отличии от GET (200)
 
 // fetch('https://jsonplaceholder.typicode.com/posts/1')
 //   .then(response => response.json())
@@ -138,6 +136,8 @@ POSTMAN - отдаст, но не факт, что будет работать �
 
 // опции (строгая структура)
 // body - формат json
+// POST (отличие от GET) должен передать какую-то информацию
+// должен быть статус 201, в отличии от GET (200)
 
 const addPost = document.querySelector('.js-add');
 const listPosts = document.querySelector('.js-posts');
@@ -160,9 +160,9 @@ function handlerAddPost() {
 
 function handlerFormSubmit(event) {
   event.preventDefault();
-  
+
   const { name, description } = event.currentTarget.elements;
-  
+
   // с функции никогда не отдавать готовый json
   // строгий образец:
   const data = {
@@ -211,3 +211,51 @@ function addPostService(data) {
     }
   );
 }
+
+//==============
+
+// U - PUT/PATCH
+// так же, как и при POST, но с указанием id (обязательно)
+// PUT (используется редко, нет нужды обновлять объект полностью) - обновляет всю структуру, кроме id
+// при недостаточном кол-ве элементов, все остальные будут удалены
+
+// const options = {
+//   method: 'PUT',
+//   body: JSON.stringify({
+//     id: 1,
+//     title: 'cat',
+//   }),
+//   headers: { 'Content-type': 'application/json' },
+// };
+
+// fetch('https://jsonplaceholder.typicode.com/posts/1', options)
+//   .then(response => response.json())
+//   .then(data => console.log(data));
+
+// PATCH - обновляет 1 элемент, который нужно обновить (используется чаще)
+// const options = {
+//   method: 'PUT',
+//   body: JSON.stringify({
+//     id: 1,
+//     title: 'cat',
+//     body: 'Hello dear cat',
+//     email: 'test@gmail.com',
+//   }),
+//   headers: { 'Content-type': 'application/json' },
+// };
+
+// fetch('https://jsonplaceholder.typicode.com/posts/1', options)
+//   .then(response => response.json())
+//   .then(data => console.log(data))
+//   .catch(err => console.log(err));
+
+// D - DELETE
+// Указывается только тот элемент, который надо удалить
+
+const options = {
+  method: 'DELETE',
+};
+
+fetch('https://jsonplaceholder.typicode.com/posts/1', options).then(response =>
+  console.log(response)
+);
