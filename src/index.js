@@ -160,9 +160,9 @@ function handlerAddPost() {
 
 function handlerFormSubmit(event) {
   event.preventDefault();
-
+  
   const { name, description } = event.currentTarget.elements;
-
+  
   // с функции никогда не отдавать готовый json
   // строгий образец:
   const data = {
