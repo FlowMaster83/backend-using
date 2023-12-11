@@ -335,30 +335,32 @@ POSTMAN - отдаст, но не факт, что будет работать �
 // Promise.resolve()
 // Promise.reject()
 
-// Параллельные запросы
-// обрабатываем во внешний код, по этому try/catch не нужен
-async function getCapital() {
-  const URL = 'https://restcountries.com/v3.1/name/';
-  const arr = ['Ukraine', 'France', 'Germany'];
-  const responses = arr.map(async country => {
-    const response = await fetch(`${URL}${country}`);
-    if (!response.ok) {
-      throw new Error('Not Found');
-    }
-    return response.json();
-  });
+// // Параллельные запросы
+// // обрабатываем во внешний код, по этому try/catch не нужен
+// async function getCapital() {
+//   const URL = 'https://restcountries.com/v3.1/name/';
+//   const arr = ['Ukraine', 'France', 'Germany'];
+//   const responses = arr.map(async country => {
+//     const response = await fetch(`${URL}${country}`);
+//     if (!response.ok) {
+//       throw new Error('Not Found');
+//     }
+//     return response.json();
+//   });
 
-  // метод allSettled
-  const prom = await Promise.allSettled(responses);
-  return prom;
-}
+//   // метод allSettled
+//   const prom = await Promise.allSettled(responses);
+//   return prom;
+// }
 
-getCapital()
-  .then(data => {
-    const resolve = data
-      .filter(({ status }) => status === 'fulfilled')
-      .map(({ value }) => value);
-    const reject = data.filter(({ status }) => status === 'rejected');
-  })
-  .catch(error => console.log(error));
-// асинх функция всегда возвращает промис
+// getCapital()
+//   .then(data => {
+//     const resolve = data
+//       .filter(({ status }) => status === 'fulfilled')
+//       .map(({ value }) => value);
+//     const reject = data.filter(({ status }) => status === 'rejected');
+//   })
+//   .catch(error => console.log(error));
+// // асинх функция всегда возвращает промис
+
+//==============
