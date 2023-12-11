@@ -1,0 +1,2 @@
+(async function(){const t=["Ukraine","France","Germany"].map((async t=>{const e=await fetch(`https://restcountries.com/v3.1/name/${t}`);if(!e.ok)throw new Error("Not Found");return e.json()}));return await Promise.allSettled(t)})().then((t=>{t.filter((({status:t})=>"fulfilled"===t)).map((({value:t})=>t)),t.filter((({status:t})=>"rejected"===t))})).catch((t=>console.log(t)));
+//# sourceMappingURL=index.29ab4461.js.map
