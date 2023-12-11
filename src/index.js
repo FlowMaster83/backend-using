@@ -289,15 +289,76 @@ POSTMAN - отдаст, но не факт, что будет работать �
 // return
 // then/catch
 
+// async function getCapital() {
+//   const URL = 'https://restcountries.com/v3.1/name/';
+//   const response = await fetch(`${URL}Ukraine`);
+//   if (!response.ok) {
+//     throw new Error(response.statusText);
+//   }
+//   return response.json();
+// }
+
+// getCapital()
+//   .then(data => console.log(data))
+//   .catch(error => console.log(error));
+
+//==============
+
+// любая функция может стать асинх
+// всегда возвращает промис
+
+// делятся на 2 случая обработки:
+// если запрос обрабатывается внутри (без return) - обрабатываем с помоцью try (запрос, проверка на статус, парс респонса и тд) / catch (пишется возможная ошибка)
+// если за пределы - обработка при помощи then / catch
+
+// async function foo() {}
+
+// console.log(foo());
+
+// // arrow async
+// const arrow = async () => {};
+// // exp asynce
+// const exp = async function () {};
+
+// const user = {
+//   async getFoo() {},
+//   getInfo: async function () {},
+//   getTest: async () => {},
+// };
+
+//==============
+
+// парал и послед запросы
+// promise.all() - обрабатывает все УСПЕШНЫЕ респонсы
+// Promise.allSettled - обрабатывает ВСЕ респонсы и добавит флажок
+// Promise.race()​
+// Promise.resolve()
+// Promise.reject()
+
+// Параллельные запросы
+// обрабатываем во внешний код, по этому try/catch не нужен
 async function getCapital() {
   const URL = 'https://restcountries.com/v3.1/name/';
-  const response = await fetch(`${URL}Ukraine`);
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  return response.json();
+  const arr = ['Ukraine', 'France', 'Germany'];
+  const responses = arr.map(async country => {
+    const response = await fetch(`${URL}${country}`);
+    if (!response.ok) {
+      throw new Error('Not Found');
+    }
+    return response.json();
+  });
+
+  // метод allSettled
+  const prom = await Promise.allSettled(responses);
+  return prom;
 }
 
 getCapital()
-  .then(data => console.log(data))
+  .then(data => {
+    const resolve = data
+      .filter(({ status }) => status === 'fulfilled')
+      .map(({ value }) => value);
+    const reject = data.filter(({ status }) => status === 'rejected');
+  })
   .catch(error => console.log(error));
+// асинх функция всегда возвращает промис
