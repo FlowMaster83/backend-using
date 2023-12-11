@@ -19,7 +19,17 @@ function handlerFrom(event) {
     .getAll('country')
     .filter(item => item)
     .map(item => item.trim());
-  getCountries(arr);
+  getCountries(arr)
+    .then(async response => {
+      const capitals = response.map(({ capital }) => capital[0]);
+      const weatherService = await getWeather(capitals);
+      list.innerHTML = createMarkup(weatherService);
+    })
+    .catch(e => console.log(e))
+    .finally(() => {
+      formContainer.innerHTML = markup;
+      searchForm.reset();
+    });
 }
 
 async function getCountries(arr) {
@@ -40,10 +50,53 @@ async function getCountries(arr) {
   return countryObj;
 }
 
-async function getWeather() {
+async function getWeather(arr) {
   const BASE_URL = 'http://api.weatherapi.com/v1';
+  const API_KEY = 'ce2cb9b2a3da414bb5b172546231704';
+
+  const responses = arr.map(async city => {
+    const params = new URLSearchParams({
+      key: API_KEY,
+      q: city,
+      lang: 'uk',
+    });
+
+    const response = await fetch(`${BASE_URL}/current.json?${params}`);
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json();
+  });
+  const data = await Promise.allSettled(responses);
+  const objects = data
+    .filter(({ status }) => status === 'fulfilled')
+    .map(({ value }) => value);
+
+  return objects;
 }
 
-// capital, name.official
-// http://api.weatherapi.com/v1
-// current.json
+function createMarkup(arr) {
+  return arr
+    .map(
+      ({
+        current: {
+          temp_c,
+          condition: { text, icon },
+        },
+        location: { country, name },
+      }) => {
+        `<li>
+
+      <div>
+        <h2>${country}</h2>
+        <h3>${name}</h3>
+      </div>
+      <img src="${icon}" alt="${text}">
+      <p>${text}</p>
+      <p>${temp_c}</p>
+
+      </li>`;
+      }
+    )
+    .join('');
+}
